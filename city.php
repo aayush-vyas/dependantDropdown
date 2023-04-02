@@ -1,10 +1,15 @@
 <?php   
+ 
+
     $countryCode = $_GET["selectedCountryCode"];
-    // print_r($_GET);
-    // echo $countryCode;
+    $stateCode = $_GET["selectedStateCode"];
+    
+  
 
 
-    $url = "https://api.countrystatecity.in/v1/countries/".$countryCode."/states";
+
+    $url = "https://api.countrystatecity.in/v1/countries/".$countryCode."/states/".$stateCode."/cities";
+
   
     $api_key = "VUsxWm53NURjSU9kbTI0dkp5R1RDUWI3ZXdWS3Z1UW13anRWdlpYaw==";
 
@@ -23,31 +28,15 @@
         $response = curl_exec($curl);
         $error = curl_error($curl);
  
-    curl_close($curl);
 
-    $json_object = json_decode($response);
-    $stateName = array_map(function($object){
-        return $object->name;
-    },$json_object);
-
-    
-    $stateCode = array_map(function($object){
-        return $object->iso2;
-    },$json_object);
-
+        curl_close($curl);
 
     if ($error) {
         echo "cURL Error: " . $error;
     } else{
       
-
-    $response = array(
-        
-        "stateName" => $stateName,
-        "stateCode" => $stateCode
-    );
-    
     echo json_encode($response);
+  
     }
 
 ?>
